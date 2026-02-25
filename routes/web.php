@@ -1,21 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PhotoController;
 
-Route::get('/', function () {
-    return 'Selamat Datang';
-});
+// WelcomeController - Regular Controller
+Route::get('/hello', [WelcomeController::class, 'hello']);
 
-Route::get('/hello', function () {
-    return 'Hello World';
-});
+// Single Action Controllers
+Route::get('/', HomeController::class);
+Route::get('/about', AboutController::class);
+Route::get('/articles/{id}', ArticleController::class);
 
+// Route lainnya (dari praktikum sebelumnya)
 Route::get('/world', function () {
     return 'World';
-});
-
-Route::get('/about', function () {
-    return 'NIM: 254107023006 | Nama: Hanggoro Nursetio Margono';
 });
 
 // Route Parameter - Optional Parameter (default: 'John')
@@ -28,7 +30,10 @@ Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {
     return 'Pos ke-' . $postId . ' Komentar ke-: ' . $commentId;
 });
 
-// Route Parameter - Articles
-Route::get('/articles/{id}', function ($id) {
-    return 'Halaman Artikel dengan ID ' . $id;
-});
+// Resource Controller
+Route::resource('photos', PhotoController::class);
+
+// View - Route Greeting
+Route::get('/greeting', [WelcomeController::class, 'greeting']);
+
+
